@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Church Camp Booking Form 2026</title>
+<style>
+  body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f0f2f5; color: #333; line-height: 1.6; padding: 20px; }
+  .container { max-width: 900px; margin: auto; background: #fff; padding: 30px; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.08); }
+  h1 { color: #2c3e50; border-bottom: 2px solid #3498db; padding-bottom: 10px; margin-bottom: 5px; }
+  h2 { color: #2980b9; margin-top: 30px; }
+  .section { margin-bottom: 30px; padding: 15px; border: 1px solid #eee; border-radius: 8px; }
+  label { display: block; font-weight: bold; margin-bottom: 5px; margin-top: 15px; }
+  input[type="text"], input[type="email"], input[type="tel"], input[type="number"], select, textarea { width: 100%; padding: 12px; border: 1px solid #ccc; border-radius: 6px; box-sizing: border-box; }
+  .checkbox-group { display: flex; align-items: flex-start; gap: 10px; font-weight: normal; cursor: pointer; }
+  .checkbox-group input { margin-top: 5px; }
+  
+  .camper-block { background: #f9f9f9; border: 2px solid #e0e0e0; padding: 20px; border-radius: 10px; margin-bottom: 20px; position: relative; }
+  .camper-header { display: grid; grid-template-columns: 2fr 1.5fr 1fr auto; gap: 15px; }
+  
+  table { width: 100%; border-collapse: collapse; margin-top: 15px; background: white; font-size: 0.9em; }
+  th, td { border: 1px solid #ddd; padding: 8px; text-align: center; }
+  th { background-color: #3498db; color: white; }
+  .day-label { text-align: left; font-weight: bold; background: #f2f2f2; }
+  
+  .btn { background: #2ecc71; color: #fff; padding: 12px 24px; border: none; border-radius: 6px; cursor: pointer; font-size: 16px; font-weight: bold; transition: 0.3s; }
+  .btn:hover { background: #27ae60; }
+  .btn-remove { background: #e74c3c; padding: 8px 15px; }
+  .btn-secondary { background: #95a5a6; margin-right: 10px; }
+  
+  .total-box { background: #2c3e50; color: white; padding: 25px; font-size: 28px; font-weight: bold; text-align: right; border-radius: 8px; position: sticky; bottom: 20px; z-index: 100; box-shadow: 0 -5px 15px rgba(0,0,0,0.2); }
+  .hidden { display: none; }
+  
+  .rules-box { background: #fff3cd; border-left: 6px solid #ffc107; padding: 20px; margin-top: 20px; }
+  .important-note { background: #f8d7da; border-left: 6px solid #dc3545; padding: 20px; color: #721c24; margin-top: 15px; }
+  .financial-note { background: #d1ecf1; border-left: 6px solid #0c5460; padding: 20px; color: #0c5460; margin-top: 25px; margin-bottom: 10px; }
+  
+  @media print {
+    .btn, .btn-remove, .total-box { display: none; }
+    .container { box-shadow: none; border: none; }
+    .hidden { display: block !important; }
+  }
+</style>
+</head>
+<body>
+
+<div class="container">
+  <h1>Church Camp Booking 2026</h1>
+  <p><strong>Dates:</strong> Saturday 1st August — Saturday 8th August 2026</p>
+
+  <form id="bookingForm" action="https://formspree.io/f/mreanedg" method="POST">
+   
+    <input type="hidden" name="_subject" id="emailSubject" value="New Church Camp Booking">
+
+    <div class="section">
+      <h2>1. Main Contact Info</h2>
+      <label>Contact Name</label>
+      <input type="text" name="Main_Contact_Name" required>
+      
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+        <div>
+          <label>Contact Number</label>
+          <input type="tel" name="Phone" required>
+        </div>
+        <div>
+          <label>Contact Email</label>
+          <input type="email" name="_replyto" required>
+        </div>
+      </div>
+
+      <label>Allergies / Dietary Requirements (Names & Needs)</label>
+      <textarea name="Allergies_Dietary" rows="3"></textarea>
+
+      <label class="checkbox-group">
+        <input type="checkbox" name="Pre_Erected_Tent_Requested" value="Yes"> 
+        <span><strong>Request Pre-erected Tent</strong> (Limited to first 10 requests only)</span>
+      </label>
+    </div>
+
+    <div class="section">
+      <h2>2. Camper Details</h2>
+      <div id="campersContainer"></div>
+      <button type="button" class="btn" onclick="addCamper()">+ Add Camper</button>
+    </div>
+
+    <div class="section">
+      <h2>3. Permissions</h2>
+      <label>Consent for family photos to be used by our Church?</label>
+      <select name="Church_Photo_Consent" required>
+        <option value="">-- Select --</option>
+        <option value="Yes">Yes</option>
+        <option value="No">No</option>
+      </select>
+
+      <label>Consent for family photos to be used by the Campsite?</label>
+      <select name="Campsite_Photo_Consent" required>
+        <option value="">-- Select --</option>
+        <option value="Yes">Yes</option>
+        <option value="No">No</option>
+      </select>
+    </div>
+
+    <div class="rules-box">
+      <h3>Rules</h3>
+      <ul>
+        <li>Unfortunately no caravans/motorhomes are allowed on site</li>
+        <li>No alcohol to be consumed on site</li>
+        <li>No smoking or vaping on site</li>
+        <li>No pets on site</li>
+      </ul>
+    </div>
+
+    <div class="important-note">
+      <h3>Important Note</h3>
+      <p>Parents/carers are responsible for the care, supervision and safety of their child(ren) for the duration of the camp - on and off site. There is a large lake in the middle of the site, very close to the camping area. Anyone using the lake (including adults) MUST wear the life-jackets provided at ALL times and write their name on the board provided.</p>
+    </div>
+
+    <div class="financial-note">
+      <strong>Payment Information:</strong><br>
+      You’ll be sent an invoice with payment details. If you need financial help let us know – we want you to come and can help with costs if needed. 
+      <strong>Balance to be paid by 18th July 2026.</strong>
+    </div>
+
+    <div class="section">
+      <label class="checkbox-group">
+        <input type="checkbox" required name="Agreed_To_Terms" value="Yes"> 
+        <span>I have read and agree to the rules and important note.</span>
+      </label>
+    </div>
+
+    <div class="total-box">
+      Total Due: £<span id="grandTotalDisplay">0.00</span>
+      <input type="hidden" name="Grand_Total_Due" id="hiddenTotalInput">
+    </div>
+
+    <div style="margin-top: 20px; display: flex; gap: 10px;">
+        <button type="button" class="btn btn-secondary" onclick="window.print()">Print for your records</button>
+        <button type="submit" class="btn" style="flex-grow: 1; background: #3498db;">Submit Booking</button>
+    </div>
+  </form>
+</div>
+
+<script>
+  let camperCount = 0;
+
+  const schedule = [
+    { id: 'sat1', name: 'Sat 1st Aug', hasCamp: true, meals: ['dinner'] },
+    { id: 'sun2', name: 'Sun 2nd Aug', hasCamp: true, meals: ['breakfast', 'lunch', 'dinner'] },
+    { id: 'mon3', name: 'Mon 3rd Aug', hasCamp: true, meals: ['breakfast', 'lunch', 'dinner'] },
+    { id: 'tue4', name: 'Tue 4th Aug', hasCamp: true, meals: ['breakfast', 'lunch', 'dinner'] },
+    { id: 'wed5', name: 'Wed 5th Aug', hasCamp: true, meals: ['breakfast', 'lunch', 'dinner'] },
+    { id: 'thu6', name: 'Thu 6th Aug', hasCamp: true, meals: ['breakfast', 'lunch', 'dinner'] },
+    { id: 'fri7', name: 'Fri 7th Aug', hasCamp: true, meals: ['breakfast', 'lunch', 'dinner'] },
+    { id: 'sat8', name: 'Sat 8th Aug', hasCamp: false, meals: ['breakfast'] }
+  ];
+
+  function addCamper() {
+    camperCount++;
+    const id = camperCount;
+    
+    let rowsHtml = '';
+    schedule.forEach(day => {
+      let mealsHtml = '';
+      day.meals.forEach(m => {
+        mealsHtml += `<label style="font-weight:normal"><input type="checkbox" name="Camper_${id}_${day.id}_${m}" class="meal-cb" data-meal="${m}" value="Requested"> ${m}</label> `;
+      });
+
+      rowsHtml += `
+        <tr class="day-row">
+          <td class="day-label">${day.name}</td>
+          <td>
+            <select name="Camper_${id}_${day.id}_StayType" class="attendance-select">
+              <option value="Not Attending">Not Attending</option>
+              ${day.hasCamp ? '<option value="Overnight">Overnight</option>' : ''}
+              <option value="Day Visitor">Day Visitor</option>
+            </select>
+          </td>
+          <td><div class="meal-container">${mealsHtml}</div></td>
+        </tr>
+      `;
+    });
+
+    const html = `
+      <div class="camper-block" id="camper-${id}">
+        <div class="camper-header">
+          <div><label>Name</label><input type="text" name="Camper_${id}_Name" required></div>
+          <div><label>Category</label>
+            <select name="Camper_${id}_Category" class="age-select" onchange="toggleAgeInput(${id}, this.value)" required>
+              <option value="adult">Adult (18+)</option>
+              <option value="child5plus">Child (5-17)</option>
+              <option value="child2to4">Child (2-4)</option>
+              <option value="infant">Under 2</option>
+            </select>
+          </div>
+          <div id="age-input-div-${id}" class="hidden">
+            <label>Exact Age</label>
+            <input type="number" name="Camper_${id}_ExactAge" min="0" max="17" placeholder="Age">
+          </div>
+          <div style="padding-top:35px"><button type="button" class="btn btn-remove" onclick="removeCamper(${id})">X</button></div>
+        </div>
+
+        <div style="margin: 15px 0;">
+          <label class="checkbox-group">
+            <input type="radio" name="Camper_${id}_PricingType" value="Whole Week (£100)" class="type-radio" checked> Whole Week (£100)
+          </label>
+          <label class="checkbox-group">
+            <input type="radio" name="Camper_${id}_PricingType" value="Custom Days" class="type-radio"> Custom Days
+          </label>
+        </div>
+
+        <div class="custom-days hidden" id="customDays-${id}">
+          <table>
+            <thead><tr><th>Day</th><th>Stay</th><th>Meals (Day Guests)</th></tr></thead>
+            <tbody>${rowsHtml}</tbody>
+          </table>
+        </div>
+      </div>
+    `;
+    document.getElementById('campersContainer').insertAdjacentHTML('beforeend', html);
+    calculateTotal();
+  }
+
+  function toggleAgeInput(id, val) {
+    const ageDiv = document.getElementById(`age-input-div-${id}`);
+    if (val !== 'adult') ageDiv.classList.remove('hidden');
+    else ageDiv.classList.add('hidden');
+  }
+
+  function removeCamper(id) { document.getElementById(`camper-${id}`).remove(); calculateTotal(); }
+
+  document.getElementById('bookingForm').addEventListener('change', function(e) {
+    if (e.target.classList.contains('type-radio')) {
+      const block = e.target.closest('.camper-block');
+      block.querySelector('.custom-days').classList.toggle('hidden', e.target.value.includes('Whole Week'));
+    }
+    
+    if (e.target.classList.contains('attendance-select')) {
+      const row = e.target.closest('tr');
+      const mealContainer = row.querySelector('.meal-container');
+      if (e.target.value === 'Overnight') {
+        mealContainer.style.opacity = '0.3';
+        mealContainer.style.pointerEvents = 'none';
+        row.querySelectorAll('.meal-cb').forEach(cb => cb.checked = false);
+      } else {
+        mealContainer.style.opacity = '1';
+        mealContainer.style.pointerEvents = 'auto';
+      }
+    }
+    calculateTotal();
+  });
+
+  function calculateTotal() {
+    let total = 0;
+    document.querySelectorAll('.camper-block').forEach(camper => {
+      const cat = camper.querySelector('.age-select').value;
+      const type = camper.querySelector('.type-radio:checked').value;
+      
+      if (type.includes('Whole Week')) {
+        total += (cat === 'infant' ? 0 : 100);
+      } else {
+        camper.querySelectorAll('.day-row').forEach(row => {
+          const att = row.querySelector('.attendance-select').value;
+          if (att === 'Overnight') {
+            if (cat === 'adult' || cat === 'child5plus') total += 14.50;
+            else if (cat === 'child2to4') total += 7.50;
+          } else if (att === 'Day Visitor') {
+            if (cat !== 'infant') total += 3.50;
+            row.querySelectorAll('.meal-cb:checked').forEach(cb => {
+              const m = cb.dataset.meal;
+              if (cat === 'adult' || cat === 'child5plus') {
+                total += (m === 'breakfast' ? 1.50 : (m === 'lunch' ? 2.50 : 4.50));
+              } else if (cat === 'child2to4') {
+                total += (m === 'breakfast' ? 1.25 : (m === 'lunch' ? 2.25 : 4.00));
+              }
+            });
+          }
+        });
+      }
+    });
+    document.getElementById('grandTotalDisplay').textContent = total.toFixed(2);
+    document.getElementById('hiddenTotalInput').value = "£" + total.toFixed(2);
+  }
+
+  // Final check to make sure the total is updated before submission
+  document.getElementById('bookingForm').onsubmit = function() {
+    calculateTotal();
+    return true;
+  };
+
+  document.querySelector('input[name="Main_Contact_Name"]').addEventListener('input', function(e) {
+  document.getElementById('emailSubject').value = "Camp Booking: " + e.target.value;
+});
+
+  addCamper();
+</script>
+
+</body>
+</html>
