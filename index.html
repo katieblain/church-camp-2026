@@ -22,7 +22,6 @@
   th { background-color: #3498db; color: white; }
   .day-label { text-align: left; font-weight: bold; background: #f2f2f2; width: 120px; }
   
-  /* Vertical Meal Stack */
   .meal-stack { 
     display: flex;
     flex-direction: column;
@@ -51,6 +50,7 @@
   .rules-box { background: #fff3cd; border-left: 6px solid #ffc107; padding: 20px; margin-top: 20px; }
   .important-note { background: #f8d7da; border-left: 6px solid #dc3545; padding: 20px; color: #721c24; margin-top: 15px; }
   .financial-note { background: #d1ecf1; border-left: 6px solid #0c5460; padding: 20px; color: #0c5460; margin-top: 25px; margin-bottom: 10px; }
+  .consent-box { background: #e8f4fd; border-left: 6px solid #3498db; padding: 20px; margin-top: 20px; }
   
   @media print { .btn, .btn-remove, .total-box { display: none; } }
 </style>
@@ -129,6 +129,14 @@
       <strong>Payment Information:</strong><br>
       You’ll be sent an invoice with payment details. If you need financial help let us know – we want you to come and can help with costs if needed. 
       <strong>Balance to be paid by 18th July 2026.</strong>
+    </div>
+
+    <div class="consent-box">
+      <h3>Data Protection & Consent</h3>
+      <label class="checkbox-group">
+        <input type="checkbox" required name="Data Storage Consent" value="Agreed"> 
+        <span>I consent to Barrow Baptist Church storing and processing the personal data provided in this form via Formspree for the purpose of organising and managing the 2026 Church Camp. I understand this data will be used for internal church use only, kept secure, and will not be shared with third parties. I understand that I have the right to withdraw this consent at any time by emailing administrator@barrowbaptist.org.uk.</span>
+      </label>
     </div>
 
     <div class="section">
