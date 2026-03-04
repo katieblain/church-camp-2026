@@ -13,33 +13,46 @@
   label { display: block; font-weight: bold; margin-bottom: 5px; margin-top: 15px; }
   input[type="text"], input[type="email"], input[type="tel"], input[type="number"], select, textarea { width: 100%; padding: 12px; border: 1px solid #ccc; border-radius: 6px; box-sizing: border-box; }
   .checkbox-group { display: flex; align-items: flex-start; gap: 10px; font-weight: normal; cursor: pointer; }
-  .checkbox-group input { margin-top: 5px; }
   
   .camper-block { background: #f9f9f9; border: 2px solid #e0e0e0; padding: 20px; border-radius: 10px; margin-bottom: 20px; position: relative; }
   .camper-header { display: grid; grid-template-columns: 2fr 1.5fr 1fr auto; gap: 15px; }
   
-  table { width: 100%; border-collapse: collapse; margin-top: 15px; background: white; font-size: 0.9em; }
-  th, td { border: 1px solid #ddd; padding: 8px; text-align: center; }
+  table { width: 100%; border-collapse: collapse; margin-top: 15px; background: white; font-size: 0.85em; }
+  th, td { border: 1px solid #ddd; padding: 10px; text-align: center; }
   th { background-color: #3498db; color: white; }
-  .day-label { text-align: left; font-weight: bold; background: #f2f2f2; }
+  .day-label { text-align: left; font-weight: bold; background: #f2f2f2; width: 120px; }
   
+  /* Vertical Meal Stack */
+  .meal-stack { 
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+    padding: 5px 0;
+  }
+  .meal-item { 
+    display: flex; 
+    align-items: center; 
+    gap: 8px; 
+    font-weight: normal; 
+    font-size: 0.95em;
+    cursor: pointer;
+  }
+  .meal-item input { width: auto; margin: 0; }
+
   .btn { background: #2ecc71; color: #fff; padding: 12px 24px; border: none; border-radius: 6px; cursor: pointer; font-size: 16px; font-weight: bold; transition: 0.3s; }
   .btn:hover { background: #27ae60; }
   .btn-remove { background: #e74c3c; padding: 8px 15px; }
-  .btn-secondary { background: #95a5a6; margin-right: 10px; }
   
   .total-box { background: #2c3e50; color: white; padding: 25px; font-size: 28px; font-weight: bold; text-align: right; border-radius: 8px; position: sticky; bottom: 20px; z-index: 100; box-shadow: 0 -5px 15px rgba(0,0,0,0.2); }
   .hidden { display: none; }
-  
+  .meal-hidden { visibility: hidden; }
+
   .rules-box { background: #fff3cd; border-left: 6px solid #ffc107; padding: 20px; margin-top: 20px; }
   .important-note { background: #f8d7da; border-left: 6px solid #dc3545; padding: 20px; color: #721c24; margin-top: 15px; }
   .financial-note { background: #d1ecf1; border-left: 6px solid #0c5460; padding: 20px; color: #0c5460; margin-top: 25px; margin-bottom: 10px; }
   
-  @media print {
-    .btn, .btn-remove, .total-box { display: none; }
-    .container { box-shadow: none; border: none; }
-    .hidden { display: block !important; }
-  }
+  @media print { .btn, .btn-remove, .total-box { display: none; } }
 </style>
 </head>
 <body>
@@ -49,30 +62,25 @@
   <p><strong>Dates:</strong> Saturday 1st August — Saturday 8th August 2026</p>
 
   <form id="bookingForm" action="https://formspree.io/f/mreanedg" method="POST">
-   
+    
     <input type="hidden" name="_subject" id="emailSubject" value="New Church Camp Booking">
+    <input type="hidden" name="Booking Summary" id="bookingSummary">
 
     <div class="section">
       <h2>1. Main Contact Info</h2>
       <label>Contact Name</label>
-      <input type="text" name="Main_Contact_Name" required>
+      <input type="text" name="Primary Contact" id="mainContactName" required>
       
       <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
-        <div>
-          <label>Contact Number</label>
-          <input type="tel" name="Phone" required>
-        </div>
-        <div>
-          <label>Contact Email</label>
-          <input type="email" name="_replyto" required>
-        </div>
+        <div><label>Contact Number</label><input type="tel" name="Phone" required></div>
+        <div><label>Contact Email</label><input type="email" name="_replyto" required></div>
       </div>
 
       <label>Allergies / Dietary Requirements (Names & Needs)</label>
-      <textarea name="Allergies_Dietary" rows="3"></textarea>
+      <textarea name="Allergies and Dietary" rows="3"></textarea>
 
       <label class="checkbox-group">
-        <input type="checkbox" name="Pre_Erected_Tent_Requested" value="Yes"> 
+        <input type="checkbox" name="Pre-Erected Tent Requested" value="Yes"> 
         <span><strong>Request Pre-erected Tent</strong> (Limited to first 10 requests only)</span>
       </label>
     </div>
@@ -86,18 +94,20 @@
     <div class="section">
       <h2>3. Permissions</h2>
       <label>Consent for family photos to be used by our Church?</label>
-      <select name="Church_Photo_Consent" required>
-        <option value="">-- Select --</option>
-        <option value="Yes">Yes</option>
-        <option value="No">No</option>
+      <select name="Church Photo Consent" required>
+        <option value="">-- Select --</option><option value="Yes">Yes</option><option value="No">No</option>
       </select>
 
       <label>Consent for family photos to be used by the Campsite?</label>
-      <select name="Campsite_Photo_Consent" required>
-        <option value="">-- Select --</option>
-        <option value="Yes">Yes</option>
-        <option value="No">No</option>
+      <select name="Campsite Photo Consent" required>
+        <option value="">-- Select --</option><option value="Yes">Yes</option><option value="No">No</option>
       </select>
+    </div>
+
+    <div class="section">
+      <h2>4. Additional Information</h2>
+      <label>Is there anything else we should know?</label>
+      <textarea name="Additional Notes" rows="4"></textarea>
     </div>
 
     <div class="rules-box">
@@ -123,18 +133,17 @@
 
     <div class="section">
       <label class="checkbox-group">
-        <input type="checkbox" required name="Agreed_To_Terms" value="Yes"> 
+        <input type="checkbox" required name="Terms Agreed" value="Yes"> 
         <span>I have read and agree to the rules and important note.</span>
       </label>
     </div>
 
     <div class="total-box">
       Total Due: £<span id="grandTotalDisplay">0.00</span>
-      <input type="hidden" name="Grand_Total_Due" id="hiddenTotalInput">
+      <input type="hidden" name="Grand Total Due" id="hiddenTotalInput">
     </div>
 
     <div style="margin-top: 20px; display: flex; gap: 10px;">
-        <button type="button" class="btn btn-secondary" onclick="window.print()">Print for your records</button>
         <button type="submit" class="btn" style="flex-grow: 1; background: #3498db;">Submit Booking</button>
     </div>
   </form>
@@ -160,22 +169,23 @@
     
     let rowsHtml = '';
     schedule.forEach(day => {
-      let mealsHtml = '';
+      let mealsStackHtml = '<div class="meal-stack">';
       day.meals.forEach(m => {
-        mealsHtml += `<label style="font-weight:normal"><input type="checkbox" name="Camper_${id}_${day.id}_${m}" class="meal-cb" data-meal="${m}" value="Requested"> ${m}</label> `;
+        mealsStackHtml += `<label class="meal-item"><input type="checkbox" name="Camper ${id} - ${day.name} - ${m}" class="meal-cb" data-meal="${m}" value="Yes"> ${m.charAt(0).toUpperCase() + m.slice(1)}</label>`;
       });
+      mealsStackHtml += '</div>';
 
       rowsHtml += `
         <tr class="day-row">
           <td class="day-label">${day.name}</td>
           <td>
-            <select name="Camper_${id}_${day.id}_StayType" class="attendance-select">
+            <select name="Camper ${id} - ${day.name} - Plan" class="attendance-select">
               <option value="Not Attending">Not Attending</option>
               ${day.hasCamp ? '<option value="Overnight">Overnight</option>' : ''}
               <option value="Day Visitor">Day Visitor</option>
             </select>
           </td>
-          <td><div class="meal-container">${mealsHtml}</div></td>
+          <td><div class="meal-container meal-hidden">${mealsStackHtml}</div></td>
         </tr>
       `;
     });
@@ -183,9 +193,9 @@
     const html = `
       <div class="camper-block" id="camper-${id}">
         <div class="camper-header">
-          <div><label>Name</label><input type="text" name="Camper_${id}_Name" required></div>
+          <div><label>Name</label><input type="text" name="Camper ${id} Name" required></div>
           <div><label>Category</label>
-            <select name="Camper_${id}_Category" class="age-select" onchange="toggleAgeInput(${id}, this.value)" required>
+            <select name="Camper ${id} Age Group" class="age-select" onchange="toggleAgeInput(${id}, this.value)" required>
               <option value="adult">Adult (18+)</option>
               <option value="child5plus">Child (5-17)</option>
               <option value="child2to4">Child (2-4)</option>
@@ -194,23 +204,23 @@
           </div>
           <div id="age-input-div-${id}" class="hidden">
             <label>Exact Age</label>
-            <input type="number" name="Camper_${id}_ExactAge" min="0" max="17" placeholder="Age">
+            <input type="number" name="Camper ${id} Exact Age" min="0" max="17" placeholder="Age">
           </div>
           <div style="padding-top:35px"><button type="button" class="btn btn-remove" onclick="removeCamper(${id})">X</button></div>
         </div>
 
         <div style="margin: 15px 0;">
           <label class="checkbox-group">
-            <input type="radio" name="Camper_${id}_PricingType" value="Whole Week (£100)" class="type-radio" checked> Whole Week (£100)
+            <input type="radio" name="Camper ${id} Pricing" value="Whole Week (£100)" class="type-radio" checked> Whole Week (£100)
           </label>
           <label class="checkbox-group">
-            <input type="radio" name="Camper_${id}_PricingType" value="Custom Days" class="type-radio"> Custom Days
+            <input type="radio" name="Camper ${id} Pricing" value="Custom Days" class="type-radio"> Custom Days
           </label>
         </div>
 
         <div class="custom-days hidden" id="customDays-${id}">
           <table>
-            <thead><tr><th>Day</th><th>Stay</th><th>Meals (Day Guests)</th></tr></thead>
+            <thead><tr><th>Day</th><th>Plan</th><th>Meals</th></tr></thead>
             <tbody>${rowsHtml}</tbody>
           </table>
         </div>
@@ -229,33 +239,37 @@
   function removeCamper(id) { document.getElementById(`camper-${id}`).remove(); calculateTotal(); }
 
   document.getElementById('bookingForm').addEventListener('change', function(e) {
-    if (e.target.classList.contains('type-radio')) {
-      const block = e.target.closest('.camper-block');
-      block.querySelector('.custom-days').classList.toggle('hidden', e.target.value.includes('Whole Week'));
-    }
-    
-    if (e.target.classList.contains('attendance-select')) {
-      const row = e.target.closest('tr');
-      const mealContainer = row.querySelector('.meal-container');
-      if (e.target.value === 'Overnight') {
-        mealContainer.style.opacity = '0.3';
-        mealContainer.style.pointerEvents = 'none';
-        row.querySelectorAll('.meal-cb').forEach(cb => cb.checked = false);
-      } else {
-        mealContainer.style.opacity = '1';
-        mealContainer.style.pointerEvents = 'auto';
+    if (e.target.classList.contains('type-radio') || e.target.classList.contains('age-select') || e.target.classList.contains('meal-cb') || e.target.classList.contains('attendance-select')) {
+      if (e.target.classList.contains('type-radio')) {
+        const block = e.target.closest('.camper-block');
+        block.querySelector('.custom-days').classList.toggle('hidden', e.target.value.includes('Whole Week'));
       }
+      if (e.target.classList.contains('attendance-select')) {
+        const row = e.target.closest('tr');
+        const mealContainer = row.querySelector('.meal-container');
+        if (e.target.value === 'Not Attending') {
+          mealContainer.classList.add('meal-hidden');
+          row.querySelectorAll('.meal-cb').forEach(cb => cb.checked = false);
+        } else {
+          mealContainer.classList.remove('meal-hidden');
+        }
+      }
+      calculateTotal();
     }
-    calculateTotal();
+  });
+
+  document.getElementById('mainContactName').addEventListener('input', function(e) {
+      document.getElementById('emailSubject').value = "Camp Booking: " + e.target.value;
   });
 
   function calculateTotal() {
     let total = 0;
     document.querySelectorAll('.camper-block').forEach(camper => {
       const cat = camper.querySelector('.age-select').value;
-      const type = camper.querySelector('.type-radio:checked').value;
+      const typeRadio = camper.querySelector('.type-radio:checked');
+      const isWholeWeek = typeRadio && typeRadio.value.includes('Whole Week');
       
-      if (type.includes('Whole Week')) {
+      if (isWholeWeek) {
         total += (cat === 'infant' ? 0 : 100);
       } else {
         camper.querySelectorAll('.day-row').forEach(row => {
@@ -277,22 +291,20 @@
         });
       }
     });
-    document.getElementById('grandTotalDisplay').textContent = total.toFixed(2);
+    document.getElementById('grandTotalDisplay').innerText = total.toFixed(2);
     document.getElementById('hiddenTotalInput').value = "£" + total.toFixed(2);
   }
 
-  // Final check to make sure the total is updated before submission
   document.getElementById('bookingForm').onsubmit = function() {
     calculateTotal();
+    const contact = document.getElementById('mainContactName').value;
+    const finalTotal = document.getElementById('grandTotalDisplay').textContent;
+    const camperNames = Array.from(document.querySelectorAll('input[name*="Name"]')).map(i => i.value).join(', ');
+    document.getElementById('bookingSummary').value = `Booking for ${contact} | Total: £${finalTotal} | Campers: ${camperNames}`;
     return true;
   };
 
-  document.querySelector('input[name="Main_Contact_Name"]').addEventListener('input', function(e) {
-  document.getElementById('emailSubject').value = "Camp Booking: " + e.target.value;
-});
-
   addCamper();
 </script>
-
 </body>
 </html>
